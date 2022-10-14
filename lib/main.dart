@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_startup/country_page.dart';
 import 'package:flutter_startup/home_page.dart';
 import 'package:flutter_startup/splash_page.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const SplashPage(),
+        home: const CountryPage(),
         debugShowCheckedModeBanner: false);
   }
 }
