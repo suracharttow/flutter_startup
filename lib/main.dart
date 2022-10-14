@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'My App Name'),
+        home: const MyHomePage(title: 'Title of Apps'),
         debugShowCheckedModeBanner: false);
   }
 }
@@ -41,10 +41,72 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: const EdgeInsets.all(5),
           child: Image.asset('assets/images/logo.png'),
         ),
+        actions: [
+          PopupMenuButton(
+              icon: const Icon(Icons.more_horiz),
+              offset: const Offset(0, 40),
+              itemBuilder: (context) => [
+                    PopupMenuItem(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.help_outline, color: Colors.black87),
+                          Container(
+                            margin: const EdgeInsets.only(left: 10),
+                            child: const Text("Help"),
+                          ),
+                        ],
+                      ),
+                      onTap: () async {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text('Help'),
+                        ));
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.language, color: Colors.black87),
+                          Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: Text("Language")),
+                        ],
+                      ),
+                      onTap: () async {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text('Language'),
+                        ));
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.settings, color: Colors.black87),
+                          Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: Text("Setting")),
+                        ],
+                      ),
+                      onTap: () async {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text('Setting'),
+                        ));
+                      },
+                    ),
+                  ])
+        ],
       ),
       body: const Center(
-          child: Text(
-              'Hello Flutter')), // This trailing comma makes auto-formatting nicer for build methods.
+        child: Text(
+          'Hi, We are Flutter Dev',
+          style: TextStyle(
+            color: Colors.red,
+            fontSize: 30,
+          ),
+        ),
+      ),
     );
   }
 }
