@@ -43,14 +43,9 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-xxxxxxx~yyyyyy</string> 
-	<key>SKAdNetworkItems</key>
-	<array>
-		<dict>
-			<key>SKAdNetworkIdentifier</key>
-			<string>cstr6suwn9.skadnetwork</string>
-		</dict>
-	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>The app will be accessing your camera to capture photos is required to edit photo</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The app will be accessing your photo library is required to edit photo</string> 
 </dict>
 </plist>
