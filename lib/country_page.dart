@@ -15,6 +15,9 @@ class CountryPage extends StatefulWidget {
 class _CountryPageState extends State<CountryPage> {
   bool isLoading = false;
   late List<CountryModel> countryData;
+  late List<CountryModel> countryDataTmp;
+  String searchKeyword = '';
+  var inputTextController = TextEditingController(text: '');
 
   @override
   void initState() {
@@ -27,15 +30,25 @@ class _CountryPageState extends State<CountryPage> {
       isLoading = true;
     });
 
-    countryData = [];
+    countryDataTmp = [];
 
     var jsonText = await rootBundle.loadString('assets/json/country.json');
     var res = jsonDecode(jsonText);
     for (var ls in res) {
-      countryData.add(CountryModel.fromJson(ls));
+      if (searchKeyword.isNotEmpty && searchKeyword.length > 1) {
+        if (ls["name"]
+            .toString()
+            .toLowerCase()
+            .contains(searchKeyword.toLowerCase())) {
+          countryDataTmp.add(CountryModel.fromJson(ls));
+        }
+      } else {
+        countryDataTmp.add(CountryModel.fromJson(ls));
+      }
     }
 
     setState(() {
+      countryData = countryDataTmp;
       isLoading = false;
     });
   }
@@ -76,43 +89,80 @@ class _CountryPageState extends State<CountryPage> {
                 )
               : Container(
                   color: Colors.black12,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: countryData
-                        .map(
-                          (val) => Container(
-                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
-                            alignment: Alignment.centerLeft,
-                            color: Colors.white,
-                            child: TextButton(
-                                onPressed: () {
-                                  // ---
-                                },
-                                child: Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/flags/" +
-                                            val.flag +
-                                            '.png',
-                                        width: 48,
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.only(left: 10),
-                                        child: Text(
-                                          val.name.toString(),
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.black),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                        child: TextField(
+                          controller: inputTextController,
+                          decoration: const InputDecoration(
+                            fillColor: Colors.white,
+                            filled: true,
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            border: OutlineInputBorder(),
+                            hintText: 'Type a words',
                           ),
-                        )
-                        .toList(),
+                          onChanged: (text) {
+                            if (text.isNotEmpty) {
+                              if (text.length > 1) {
+                                setState(() {
+                                  searchKeyword = text;
+                                });
+                              }
+                            } else {
+                              setState(() {
+                                searchKeyword = '';
+                              });
+                            }
+                            getCountry();
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: countryData
+                              .map(
+                                (val) => Container(
+                                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
+                                  alignment: Alignment.centerLeft,
+                                  color: Colors.white,
+                                  child: TextButton(
+                                      onPressed: () {
+                                        // ---
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Row(
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/flags/" +
+                                                  val.flag +
+                                                  '.png',
+                                              width: 48,
+                                            ),
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: Text(
+                                                val.name.toString(),
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
         ));
