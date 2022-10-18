@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_startup/country_page.dart';
+import 'package:flutter_startup/slider_page.dart';
 import 'package:flutter_startup/splash_page.dart';
 import 'package:flutter_startup/takephoto_page.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const CountryPage(),
+        home: const SliderPage(),
         debugShowCheckedModeBanner: false);
   }
 }
